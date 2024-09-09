@@ -1,0 +1,83 @@
+<div class="container mx-auto p-8 bg-base-100 rounded-lg max-w-3xl">
+  <button onclick="window.history.back()" class="mt-4 bg-base-300 hover:bg-base-400 text-base-content font-bold py-2 px-2 rounded flex items-center">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+
+  <div *ngIf="!topic" class="text-base-content text-center py-8">Loading topic details...</div>
+
+  <div *ngIf="topic" class="bg-base-100 rounded-lg shadow-md overflow-hidden mx-auto max-w-3xl">
+    <div class="p-10">
+      <h2 class="text-3xl font-extrabold text-base-content mb-4">{{ topic.title }}</h2>
+      <p class="text-base-content mb-2">Created by: {{ topic.createdByUsername }} on {{ topic.createdOn | date:'medium' }}</p>
+      <div class="topic-content" [innerHTML]="topic.content"></div>
+
+      <div class="mt-6">
+        <h3 class="text-xl font-bold text-base-content mb-3">Replies</h3>
+
+        <div *ngFor="let reply of topic.replies">
+          <div class="flex items-start mb-4 reply">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-3">
+              <img [src]="reply.userImageUrl || 'path/to/default-profile-image.jpg'" alt="User Image" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <p class="font-semibold">{{ reply.username }}</p>
+              <p class="text-base-content text-sm mb-2">{{ reply.createdOn | date:'medium' }}</p>
+              <div [innerHTML]="reply.content"></div>
+
+              <div class="flex justify-end mt-2">
+                <button *ngIf="canDeleteReply(reply)" (click)="deleteReply(reply.id)" class="text-error hover:underline">
+                  Delete
+                </button>
+                <button (click)="replyToReply(reply)" class="text-primary hover:underline ml-2">
+                  Reply
+                </button>
+              </div>
+
+              <div *ngIf="reply.replies && reply.replies.length > 0" class="ml-6 mt-4">
+                <ng-container *ngFor="let subReply of reply.replies">
+                  <div class="flex items-start mb-4 sub-reply">
+                    <div class="w-12 h-12 rounded-full overflow-hidden mr-3">
+                      <img [src]="subReply.userImageUrl || 'path/to/default-profile-image.jpg'" alt="User Image" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                      <p class="font-semibold">{{ subReply.username }}</p>
+                      <p class="text-base-content text-sm mb-2">{{ subReply.createdOn | date:'medium' }}</p>
+                      <div [innerHTML]="subReply.content"></div>
+
+                      <div class="flex justify-end mt-2">
+                        <button *ngIf="canDeleteReply(subReply)" (click)="deleteReply(subReply.id)" class="text-error hover:underline">
+                          Delete
+                        </button>
+                        <button (click)="replyToReply(subReply)" class="text-primary hover:underline ml-2">
+                          Reply
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <div *ngIf="isReplyingTo === reply.id" class="mt-4">
+                <textarea [(ngModel)]="newReplyContent" rows="3" class="w-full p-2 border rounded-md"></textarea>
+                <button (click)="addReply(reply.id)" class="bg-primary hover:bg-primary-focus text-base-100 font-bold py-2 px-4 rounded mt-2">
+                  Add Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <textarea [(ngModel)]="newReplyContent" rows="3" class="w-full p-2 border rounded-md"></textarea>
+          <button (click)="addReply()" class="bg-primary hover:bg-primary-focus text-base-100 font-bold py-2 px-4 rounded mt-2">
+            Add Reply
+          </button>
+        </div>
+      </div>
+
+      <button routerLink="/forum/overview" class="mt-4 bg-base-300 hover:bg-base-400 text-base-content font-bold py-2 px-4 rounded">
+        Back to Forum
+      </button>
+    </div>
+  </div>
+</div>

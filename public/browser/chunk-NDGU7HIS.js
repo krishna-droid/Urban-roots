@@ -1,0 +1,1 @@
+import{Ab as o,Bb as i,Vb as p,na as n}from"./chunk-7ZC2CAVG.js";var a=class t{constructor(){}ngOnInit(){}static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-map-overview"]],decls:2,vars:0,template:function(e,m){e&1&&(o(0,"p"),p(1,"map-overview works!"),i())}})};export{a as MapOverviewComponent};

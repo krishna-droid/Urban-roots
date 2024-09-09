@@ -1,0 +1,139 @@
+<div class="flex flex-col h-screen">
+  <!-- Header with Navigation -->
+  <header class="navbar bg-base-100 shadow-md">
+    <div class="navbar-start">
+      <a class="btn btn-ghost normal-case text-xl">UrbanRoots</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 space-x-4">
+        <li>
+          <a routerLink="/user/dashboard" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fas fa-home mr-2"></i> Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/event/overview">
+            <i class="fas fa-calendar mr-2"></i> Events
+          </a>
+        </li>
+        <li>
+          <a routerLink="/forum/overview">
+            <i class="fas fa-comments mr-2"></i> Forum
+          </a>
+        </li>
+        <li>
+          <a routerLink="/user/profile">
+            <i class="fas fa-user mr-2"></i> Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <button (click)="logout()" class="btn btn-primary">Log Out</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="relative flex-1">
+    <!-- Map Container Filling the Screen -->
+    <div class="absolute inset-0 z-0">
+      <div id="map" class="w-full h-full"></div>
+    </div>
+
+    <!-- Horizontal Filters Positioned Below the Map -->
+    <div class="absolute bottom-0 left-0 w-full bg-base-200 shadow-lg p-4 flex flex-wrap justify-center items-center space-x-4 z-10">
+      <!-- Distance Filter -->
+      <div class="form-control w-48">
+        <label for="distance" class="label">
+          <span class="label-text">Distance (km)</span>
+        </label>
+        <input type="range" id="distance" name="distance" min="1" max="20" [(ngModel)]="filter.distance"
+          class="range range-primary">
+        <p class="text-sm text-gray-500 mt-1">Selected: {{ filter.distance }} km</p>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="form-control w-48">
+        <label for="category" class="label">
+          <span class="label-text">Category</span>
+        </label>
+        <select id="category" name="category" [(ngModel)]="filter.category" class="select select-bordered w-full">
+          <option value="">All</option>
+          <option value="community">Community</option>
+          <option value="private">Private</option>
+        </select>
+      </div>
+
+      <!-- Max Sqft Filter -->
+      <div class="form-control w-48">
+        <label for="maxSqft" class="label">
+          <span class="label-text">Max Sqft</span>
+        </label>
+        <input type="number" id="maxSqft" name="maxSqft" [(ngModel)]="filter.maxSqft" class="input input-bordered w-full">
+      </div>
+
+      <!-- Apply Filters Button -->
+      <button (click)="applyFilters()" class="btn mt-3 btn-primary w-48 md:mt-5">
+        Apply Filters
+      </button>
+
+      <button routerLink="/garden/manage-garden" class="btn mt-3 btn-primary w-48 md:mt-5">
+       Manage My Gardens
+      </button>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div *ngIf="showModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-50" aria-hidden="true"></div>
+    
+    <!-- Modal Content -->
+    <div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center z-50 bg-base-300 bg-opacity-75">
+      <div class="bg-base-100 rounded-lg shadow-lg p-6 max-w-4xl w-full mx-4">
+        <h2 class="text-2xl font-bold mb-4 text-base-content">Garden Details</h2>
+        <div class="p-6 rounded-lg">
+          <div *ngIf="!garden" class="text-center text-base-content py-8">
+            Loading garden details...
+          </div>
+    
+          <div *ngIf="garden" class="flex flex-col gap-8">
+            <div>
+              <div class="mb-6">
+                <h2 class="text-3xl font-extrabold text-base-content mb-4">{{ garden.name }}</h2>
+                <p class="text-lg font-medium text-base-content">
+                  Size: <span class="text-primary font-bold">{{ garden.sqft }} sqft</span>
+                </p>
+              </div>
+    
+              <swiper-container
+                style="height: 320px;"
+                class="swiper mySwiper rounded-lg"
+                [slidesPerView]="1.14"
+                [centeredSlides]="true"
+                [initialSlide]="0"
+                [threshold]="5"
+                [mousewheel]="false"
+                [spaceBetween]="20">
+                <swiper-slide *ngFor="let image of garden.images; let i = index">
+                  <img [src]="garden.images[i]" class="rounded-lg w-full" />
+                </swiper-slide>
+              </swiper-container>
+    
+              <div class="mt-6">
+                <h3 class="text-xl font-bold text-base-content mb-3">Garden Details</h3>
+                <p class="text-base-content mb-2">Created by: {{ garden.username }}</p>
+                <p class="text-base-content mb-2">Type: {{ garden.type }}</p>
+                <p class="text-base-content">{{ garden.description }}</p>
+              </div>
+            </div>
+          </div>
+    
+          <div class="mt-6 flex justify-center">
+            <button (click)="closeModal()" class="btn btn-secondary">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+</div>

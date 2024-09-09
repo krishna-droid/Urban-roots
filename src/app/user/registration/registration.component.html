@@ -1,0 +1,52 @@
+<div class="flex items-center justify-center min-h-screen bg-base-200">
+  <div class="bg-base-100 p-8 rounded-lg shadow-lg max-w-md w-full">
+    <h2 class="text-2xl font-semibold text-base-content text-center">Create an Account</h2>
+    
+    <form class="mt-6">
+      <input 
+        type="text" 
+        [(ngModel)]="name" 
+        [ngModelOptions]="{standalone: true}" 
+        placeholder="Full Name" 
+        class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring focus:ring-primary"
+      >
+      <input 
+        type="email" 
+        [(ngModel)]="email" 
+        [ngModelOptions]="{standalone: true}" 
+        placeholder="Email" 
+        class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring focus:ring-primary"
+      >
+      <input 
+        type="password" 
+        [(ngModel)]="password" 
+        [ngModelOptions]="{standalone: true}" 
+        placeholder="Password" 
+        class="w-full px-4 py-2 mt-4 border rounded-lg focus:outline-none focus:ring focus:ring-primary"
+      >
+      <input 
+        type="password" 
+        [(ngModel)]="confirmPassword" 
+        [ngModelOptions]="{standalone: true}" 
+        placeholder="Confirm Password" 
+        class="w-full px-4 py-2 mt-4 border rounded-lg focus:outline-none focus:ring focus:ring-primary"
+      >
+      
+      <button 
+        (click)="signup()" 
+        class="w-full btn btn-primary mt-6"
+      >
+        Sign Up
+      </button>
+
+      <div *ngIf="error" class="mt-4 text-error text-center">
+        {{ error }}
+      </div>
+    </form>
+
+    <p class="text-sm text-base-content mt-6 text-center">
+      Already have an account? 
+      <a routerLink="/user/login" class="link link-primary">Login</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<div class="flex h-screen">
+
+    <aside class="w-64 bg-white  p-6 flex flex-col">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">UrbanRoots</h2>
+      <nav class="flex-1">
+        <ul class="space-y-2">
+          <li>
+            <a 
+            routerLinkActive="bg-gray-200 text-blue-500" 
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/user/dashboard" class="flex items-center p-4 text-gray-600 hover:bg-gray-200 rounded-md">
+              <i class="fas fa-home mr-3"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/event/overview" class="flex items-center p-4 text-gray-600 hover:bg-gray-200 rounded-md">
+              <i class="fas fa-calendar mr-3"></i>
+              <span>Events</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/forum/overview" class="flex items-center p-4 text-gray-600 hover:bg-gray-200 rounded-md">
+              <i class="fas fa-comments mr-3"></i>
+              <span>Forum</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/profile" class="flex items-center p-4 text-gray-600 hover:bg-gray-200 rounded-md">
+              <i class="fas fa-user mr-3"></i>
+              <span>Profile</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="mt-auto">
+        <button (click)="logout()" class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Log Out</button>
+      </div>
+    </aside>
+
+    <main class="flex-1 p-6">
+      <div class="mb-6 flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-6">
+        <div class="flex-1 bg-gray-200 rounded-lg overflow-hidden relative" style="height: 60vh;">
+          <div class="map-container absolute inset-0" style="height: 100% !important;" id="map"></div>
+        </div>
+
+        <div class="flex flex-col w-full lg:w-64 space-y-4">
+          <button  routerLink="/garden/manage-garden" class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">My Gardens</button>
+
+
+          <div class="bg-white p-4 rounded-lg">
+            <h2 class="text-xl font-bold mb-4">Filters</h2>
+    
+            <div class="mb-4">
+              <label for="distance" class="block text-sm font-medium text-gray-700">Distance (km)</label>
+              <input type="range" id="distance" name="distance" min="1" max="20" [(ngModel)]="filter.distance" class="w-full">
+              <p class="text-sm text-gray-500 mt-1">Selected: {{ filter.distance }} km</p>
+            </div>
+    
+            <div class="mb-4">
+              <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+              <select id="category" name="category"   
+     [(ngModel)]="filter.category" class="mt-1 p-2 border rounded-md w-full">
+                <option value="">All</option>
+                <option value="community">Community</option>
+                <option value="private">Private</option>
+              </select>
+            </div>
+    
+            <div class="mb-4">
+              <label for="minSqft" class="block text-sm font-medium text-gray-700">Min Sqft</label>
+              <input type="number" id="minSqft" name="minSqft" [(ngModel)]="filter.minSqft" class="mt-1 p-2 border rounded-md w-full">
+            </div>
+    
+            <div class="mb-4">
+              <label for="maxSqft" class="block text-sm font-medium text-gray-700">Max Sqft</label>
+              <input type="number" id="maxSqft" name="maxSqft" [(ngModel)]="filter.maxSqft" class="mt-1 p-2 border rounded-md w-full">
+            </div>
+    
+            <button (click)="applyFilters()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Apply Filters</button>
+          </div>
+      
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <h2 class="text-xl font-bold mb-2">Nearby Gardens</h2>
+        <div *ngIf="nearbyGardens.length === 0" class="text-gray-500">No gardens available nearby.</div>
+        <div *ngIf="nearbyGardens.length > 0" class="flex overflow-x-auto">
+          <div *ngFor="let garden of nearbyGardens" class="w-64 mr-4">
+            <div [routerLink]="['/garden', garden.id]" class="bg-white rounded-lg overflow-hidden">
+              <img [src]="garden.images[0] || 'path/to/default-garden-image.jpg'" alt="Garden Image" class="w-full h-40 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-bold">{{ garden.name }}</h3>
+                <p class="text-gray-600">Created by: {{ garden.username }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   </main>
+
+</div>

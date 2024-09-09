@@ -1,0 +1,117 @@
+<div class="flex flex-col h-screen" [ngClass]="{ 'mobile-view': !open }">
+  <!-- Header with Navigation -->
+  <header class="navbar bg-base-100 shadow-md" [ngClass]="{'border-b': !open}">
+    <div class="navbar-start flex items-center">
+      <!-- Hamburger button for mobile -->
+      <button (click)="open = !open" class="lg:hidden p-2 focus:outline-none" aria-label="Toggle navigation">
+        <svg *ngIf="!open" class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+        <svg *ngIf="open" class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <a class="btn btn-ghost normal-case text-xl ml-2">UrbanRoots</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 space-x-4">
+        <li>
+          <a routerLink="/user/dashboard">
+            <i class="fas fa-home mr-2"></i> Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/event/overview">
+            <i class="fas fa-calendar mr-2"></i> Events
+          </a>
+        </li>
+        <li>
+          <a routerLink="/forum/overview">
+            <i class="fas fa-comments mr-2"></i> Forum
+          </a>
+        </li>
+        <li>
+          <a routerLink="/user/profile" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fas fa-user mr-2"></i> Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <button (click)="logout()" class="btn btn-primary">Log Out</button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="open" class="lg:hidden z-20 absolute top-14 left-0 right-0 bg-base-100 shadow-lg">
+    <ul class="menu p-4 space-y-2">
+      <li>
+        <a routerLink="/user/dashboard" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" (click)="open = false">
+          <i class="fas fa-home mr-2"></i> Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="/event/overview" (click)="open = false">
+          <i class="fas fa-calendar mr-2"></i> Events
+        </a>
+      </li>
+      <li>
+        <a routerLink="/forum/overview" (click)="open = false">
+          <i class="fas fa-comments mr-2"></i> Forum
+        </a>
+      </li>
+      <li>
+        <a routerLink="/user/profile" (click)="open = false">
+          <i class="fas fa-user mr-2"></i> Profile
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex h-screen flex-col">
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <!-- Map and Actions -->
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Map -->
+        <div class="container mx-auto p-4">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex justify-center md:w-1/4 pr-4">
+              <!-- Can have additional content here if needed -->
+            </div>
+
+            <div class="md:w-3/4">
+              <div class="flex flex-col md:flex-row items-center mb-6">
+                <div class="relative w-24 h-24 rounded-full overflow-hidden mr-4">
+                  <img [src]="profileImageUrl || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'" alt="Profile Picture" class="w-full h-full object-cover">
+                  <button (click)="selectProfileImage()" class="absolute bottom-0 right-0 bg-gray-800 text-white rounded-full p-2">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <input type="file" #fileInput (change)="onProfileImageSelected($event)" style="display: none;">
+                </div>
+                <div class="flex-1">
+                  <div *ngIf="!isEditingUsername" class="flex flex-col items-start">
+                    <h2 class="text-xl font-bold">{{ username }}</h2>
+                    <button (click)="editUsername()" class="btn btn-primary mt-2">
+                      Edit Username
+                    </button>
+                  </div>
+                  <div *ngIf="isEditingUsername" class="flex items-center">
+                    <input type="text" [(ngModel)]="newUsername" class="p-2 border rounded-md mr-2">
+                    <button (click)="saveUsername()" class="btn btn-success">
+                      Update
+                    </button>
+                    <button (click)="cancelEditUsername()" class="btn btn-secondary ml-2">
+                      Cancel
+                    </button>
+                  </div>
+                  <p class="text-gray-600">{{ email }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

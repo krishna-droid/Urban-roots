@@ -1,0 +1,74 @@
+<div class="container mx-auto p-8 bg-base-100 rounded-lg max-w-3xl">
+  <button routerLink="/user/dashboard" class="mr-4 text-base-content hover:text-primary">
+    <!-- You can use an icon for the back button -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  
+  <h1 class="text-3xl font-bold mb-6 text-base-content">Upload Your Garden</h1>
+
+  <form (ngSubmit)="uploadGarden()" #gardenForm="ngForm">
+    <div class="mb-6">
+      <label for="name" class="block text-lg font-semibold text-base-content">Garden Name</label>
+      <input type="text" id="name" name="name" [(ngModel)]="garden.name" 
+             class="mt-2 p-3 border border-base-300 rounded-lg w-full focus:ring focus:ring-primary" required>
+    </div>
+
+    <div class="mb-6">
+      <label for="sqft" class="block text-lg font-semibold text-base-content">Garden Area (Sqft)</label>
+      <input type="number" id="sqft" name="sqft" [(ngModel)]="garden.sqft" 
+             class="mt-2 p-3 border border-base-300 rounded-lg w-full focus:ring focus:ring-primary" required>
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-lg font-semibold text-base-content">Location</label>
+      <div id="map" class="h-64 rounded-lg overflow-hidden border border-base-300 mb-4"></div> 
+      <button type="button" (click)="requestLocation()" 
+              class="w-full btn btn-primary">
+        Use My Location
+      </button>
+      <div *ngIf="selectedLocation" class="mt-4 text-base-content">
+        <p><strong>Selected Location:</strong> {{ selectedLocation.lat }}, {{ selectedLocation.lng }}</p>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <label for="description" class="block text-lg font-semibold text-base-content">Description</label>
+      <textarea id="description" name="description" [(ngModel)]="garden.description" rows="5"
+                class="mt-2 p-3 border border-base-300 rounded-lg w-full focus:ring focus:ring-primary"></textarea>
+    </div>
+
+    <div class="mb-6">
+      <label for="type" class="block text-lg font-semibold text-base-content">Garden Type</label>
+      <select id="type" name="type" [(ngModel)]="garden.type" 
+              class="mt-2 p-3 border border-base-300 rounded-lg w-full focus:ring focus:ring-primary">
+        <option value="community">Community</option>
+        <option value="private">Private</option>
+      </select>
+    </div>
+
+    <div *ngIf="garden.images.length > 0" class="mb-6">
+      <div class="flex flex-wrap gap-4">
+        <div *ngFor="let imageUrl of garden.images; let i = index" class="relative">
+          <img [src]="imageUrl" alt="Garden Image" class="h-32 w-32 object-cover rounded-lg shadow-lg">
+          <button type="button" (click)="deleteImage(i)" 
+                  class="absolute top-0 right-0 m-2 btn btn-error btn-circle">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <label for="images" class="block text-lg font-semibold text-base-content">Images </label>
+      <input type="file" id="images" name="images" (change)="onFileSelected($event)" multiple 
+             class="mt-2 p-2 border border-base-300 rounded-lg w-full focus:ring focus:ring-primary">
+    </div>
+
+    <button type="submit" [disabled]="!gardenForm.form.valid" 
+            class="w-full btn btn-success">
+      Upload Garden
+    </button>
+  </form>
+</div>

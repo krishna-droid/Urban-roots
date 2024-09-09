@@ -1,0 +1,111 @@
+<div class="flex flex-col h-screen" [ngClass]="{ 'mobile-view': !open }">
+  <!-- Header with Navigation -->
+  <header class="navbar bg-base-100 shadow-md" [ngClass]="{'border-b': !open}">
+    <div class="navbar-start flex items-center">
+      <!-- Hamburger button for mobile -->
+      <button (click)="open = !open" class="lg:hidden p-2 focus:outline-none" aria-label="Toggle navigation">
+        <svg *ngIf="!open" class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+        <svg *ngIf="open" class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <a class="btn btn-ghost normal-case text-xl ml-2">UrbanRoots</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 space-x-4">
+        <li>
+          <a routerLink="/user/dashboard">
+            <i class="fas fa-home mr-2"></i> Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/event/overview" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fas fa-calendar mr-2"></i> Events
+          </a>
+        </li>
+        <li>
+          <a routerLink="/forum/overview">
+            <i class="fas fa-comments mr-2"></i> Forum
+          </a>
+        </li>
+        <li>
+          <a routerLink="/user/profile">
+            <i class="fas fa-user mr-2"></i> Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <button (click)="logout()" class="btn btn-primary">Log Out</button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="open" class="lg:hidden z-20 absolute top-14 left-0 right-0 bg-base-100 shadow-lg">
+    <ul class="menu p-4 space-y-2">
+      <li>
+        <a routerLink="/user/dashboard" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+          (click)="open = false">
+          <i class="fas fa-home mr-2"></i> Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="/event/overview" (click)="open = false">
+          <i class="fas fa-calendar mr-2"></i> Events
+        </a>
+      </li>
+      <li>
+        <a routerLink="/forum/overview" (click)="open = false">
+          <i class="fas fa-comments mr-2"></i> Forum
+        </a>
+      </li>
+      <li>
+        <a routerLink="/user/profile" (click)="open = false">
+          <i class="fas fa-user mr-2"></i> Profile
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 p-20 lg:p-20 p-4">
+    <div class="mb-6 flex flex-col md:flex-row items-center justify-between">
+      <h1 class="text-3xl font-bold text-base-content mb-4 md:mb-0">Events</h1>
+      <div class="flex ml-auto space-x-4">
+        <button routerLink="/event/manage" class="btn btn-primary">
+          Manage Events
+        </button>
+        <button routerLink="/event/create" class="btn btn-secondary">
+          Create Event
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="events.length === 0" class="text-base-content">No events available.</div>
+
+    <div *ngIf="events.length > 0" class="space-y-4">
+      <div *ngFor="let event of events" class="flex flex-col md:flex-row items-center bg-base-100 rounded-lg shadow-md overflow-hidden">
+        <img [src]="event.imageUrl || 'path/to/default-event-image.jpg'" alt="Event Image" class="w-full md:w-40 h-40 object-cover">
+        <div [routerLink]="['/event/', event.id]" class="p-4 flex-1">
+          <h3 class="text-lg font-bold text-base-content">{{ event.name }}</h3>
+          <p class="text-base-content mb-2">Date: {{ event.dateTime | date:'medium' }}</p>
+          <p class="text-base-content mb-2">{{ event.eventType }}</p>
+          <div class="flex items-center justify-between">
+            <span class="text-base-content flex items-center">
+              <i class="fas fa-users mr-1"></i>
+              {{ event.interestedMembers?.length || 0 }}
+            </span>
+            <button (click)="toggleInterest(event)" [class.bg-success]="isInterested(event)" [class.bg-base-300]="!isInterested(event)"
+                    class="hover:bg-success-dark text-base-100 font-bold py-2 px-4 rounded">
+              {{ isInterested(event) ? 'Interested' : 'Show Interest' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

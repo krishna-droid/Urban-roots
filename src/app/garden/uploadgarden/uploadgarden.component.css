@@ -1,0 +1,28 @@
+.leaflet-control-geosearch {
+    /* Overall container styling */
+    border-radius: 5px; /* Add rounded corners */
+    overflow: hidden; /* Prevent content from overflowing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  .leaflet-control-geosearch form {
+    /* Form styling */
+    display: flex;
+    align-items: center;
+  }
+  
+  .leaflet-control-geosearch input.glass {
+    /* Input field styling */
+    padding: 8px 12px; /* Adjust padding as needed */
+    border: none; /* Remove default border */
+    flex-grow: 1; /* Allow the input to expand */
+    outline: none; /* Remove focus outline */
+  }
+  
+  .leaflet-control-geosearch button.reset {
+    /* Reset button styling */
+    background-color: transparent; /* Make the background transparent */
+    border: none;
+    padding: 8px; /* Adjust padding as needed */
+    cursor: pointer;
+  }

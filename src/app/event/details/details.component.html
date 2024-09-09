@@ -1,0 +1,64 @@
+<div class="container mx-auto p-6 bg-base-100 rounded-lg">
+  <div *ngIf="!event" class="text-gray-500 text-center py-8">Loading event details...</div>
+
+  <div *ngIf="event" class="flex flex-col md:flex-row gap-8">
+    <div class="md:w-1/2">
+      <div class="mb-6">
+        <h2 class="text-3xl font-extrabold text-base-content mb-4">{{ event.name }}</h2>
+        <p class="text-base-content text-lg font-medium">
+          Date & Time: 
+          <span class="text-primary font-bold">{{ event.dateTime | date:'medium' }}</span>
+        </p>
+        <p class="text-base-content flex items-center"> 
+          <i class="fas fa-users mr-1"></i> 
+          {{ event.interestedMembers?.length || 0 }} interested
+        </p> 
+      </div>
+
+      <swiper-container
+        style="height: 320px;" 
+        class="swiper mySwiper rounded-lg" 
+        [slidesPerView]="1.14" 
+        [centeredSlides]="true"
+        [initialSlide]="0"
+        [threshold]="5"
+        [mousewheel]="false"
+        [spaceBetween]="20">
+          <swiper-slide >
+            <img [src]="event.imageUrl" class="rounded-lg "/>
+          </swiper-slide>
+      </swiper-container>
+
+      <div class="mt-6">
+        <h3 class="text-xl font-bold text-base-content mb-3">Event Details</h3>
+        <p class="text-base-content mb-2">Type: {{ event.eventType }}</p>
+        <p *ngIf="event.eventType === 'offline'" class="text-base-content mb-2">
+          Location: {{ event.locationText }}
+        </p>
+        <p class="text-base-content">{{ event.description }}</p>
+
+        <div class="mt-4 flex">
+          <button (click)="toggleInterest()" 
+            [class.bg-success]="isInterested()" 
+            [class.bg-base-300]="!isInterested()"
+            class="hover:bg-success-dark text-base-100 font-bold py-2 px-4 rounded">
+            {{ isInterested() ? 'Interested' : 'Show Interest' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:w-1/2">
+      <div *ngIf="event.eventType === 'offline'" 
+           style="height: 320px; margin-top: 100px;" 
+           id="map" class="h-96 rounded-lg shadow-lg border border-base-300 overflow-hidden">
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-center">
+    <button routerLink="/user/dashboard" class="ml-1 bg-gray-500 hover:bg-gray-700 text-base-100 font-bold py-2 px-4 rounded">
+      Back
+    </button>
+  </div>
+</div>

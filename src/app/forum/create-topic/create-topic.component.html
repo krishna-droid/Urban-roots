@@ -1,0 +1,31 @@
+<div class="container mx-auto p-8 bg-base-100 rounded-lg max-w-3xl">
+  <button onclick="window.history.back()" class="mt-4 bg-base-300 hover:bg-base-400 text-base-content font-bold py-2 px-2 rounded flex items-center">
+    <i class="fas fa-arrow-left"></i>
+    <!-- Back -->
+  </button>
+  <h1 class="text-2xl font-bold mb-4">{{ isEditing ? 'Edit Topic' : 'Create New Topic' }}</h1>
+
+  <form (ngSubmit)="submitTopic()" #topicForm="ngForm">
+    <div class="mb-4">
+      <label for="title" class="block text-sm font-medium text-base-content">Title</label>
+      <input type="text" id="title" name="title" [(ngModel)]="topic.title" class="mt-1 p-2 border rounded-md w-full" required>
+    </div>
+
+    <div class="mb-4">
+      <label for="content" class="block text-sm font-medium text-base-content">Content</label>
+      <angular-editor name="content" 
+                      id="content" 
+                      required
+                      (contentChange)="onContentChange($event)"  
+                      [config]="editorConfig" 
+                      style="height: 400px;" 
+                      [placeholder]="'Enter text here...'" 
+                      [(ngModel)]="topic.content">
+      </angular-editor>
+    </div>
+
+    <button type="submit" [disabled]="!topicForm.form.valid" class="bg-primary hover:bg-primary-focus text-base-100 font-bold py-2 px-4 rounded">
+      {{ isEditing ? 'Update Topic' : 'Create Topic' }}
+    </button>
+  </form>
+</div>

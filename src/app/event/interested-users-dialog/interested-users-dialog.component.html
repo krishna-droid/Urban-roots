@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Interested Users</h1>
+<div mat-dialog-content>
+  <ul>
+    <li *ngFor="let username of data.usernames">{{ username }}</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
