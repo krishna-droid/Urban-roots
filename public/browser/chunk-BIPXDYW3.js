@@ -1,0 +1,1 @@
+import{Ab as o,Bb as a,Vb as r,na as t}from"./chunk-7ZC2CAVG.js";var i=class n{constructor(){}ngOnInit(){}static \u0275fac=function(e){return new(e||n)};static \u0275cmp=t({type:n,selectors:[["app-share-my-garden"]],decls:2,vars:0,template:function(e,s){e&1&&(o(0,"p"),r(1,"share-my-garden works!"),a())}})};export{i as ShareMyGardenComponent};
