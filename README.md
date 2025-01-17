@@ -1,4 +1,5 @@
-![Screenshot 2024-10-14 at 22 14 43 2](https://github.com/user-attachments/assets/7a70c598-0cd3-49a9-a090-fd7d89144372)Cityurbanroots@2024
+
+<img width="1440" alt="Screenshot 2025-01-17 at 17 56 56" src="https://github.com/user-attachments/assets/c9d674c1-1a71-4ab4-a7ba-0510eba26588" />
 # Cityurbanroots
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
@@ -26,11 +27,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+<img width="1440" alt="Screenshot 2025-01-17 at 17 56 56" src="https://github.com/user-attachments/assets/9e5e55a7-597c-4de5-8af5-d3a7a0c63878" />
 
-![Screenshot 2024-10-14 at 22 14 43 2](https://github.com/user-attachments/assets/9a19f32c-040a-4cba-93fc-bb7e993d623a)
-
-
-![Screenshot 2024-10-14 at 22 15 28 2](https://github.com/user-attachments/assets/474c7da3-00de-41b7-ae02-2dd2116a8a21)
+<img width="1440" alt="Screenshot 2025-01-17 at 17 57 18" src="https://github.com/user-attachments/assets/14046cb9-bdf6-49d8-bc5c-f12d8ad5fc00" />
+![Uploading Screenshot 2025-01-17 at 17.57.39.png…]()
 
 
 ![Screenshot 2024-10-14 at 22 15 03 2](https://github.com/user-attachments/assets/258d1d32-cb79-4c9b-8831-ac8128c43aa7)
